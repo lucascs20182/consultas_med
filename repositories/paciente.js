@@ -4,11 +4,11 @@ export default class PacienteRepository {
 
   DBNAME = 'app.db';
   CREATE =
-    'CREATE TABLE IF NOT EXISTS paciente(id INTEGER PRIMARY KEY AUTOINCREMENT, name VARCHAR(100), sobrenome VARCHAR(100), cpf VARCHAR(11),  dataNascimento VARCHAR(10))';
+    'CREATE TABLE IF NOT EXISTS paciente(id INTEGER PRIMARY KEY AUTOINCREMENT, nome VARCHAR(100), sobrenome VARCHAR(100), cpf VARCHAR(11),  dataNascimento VARCHAR(10))';
 
   SELECT = 'SELECT * FROM paciente';
 
-  INSERT = 'INSERT INTO paciente (name, sobrenome, cpf, dataNascimento) values (?, ?, ?, ?)';
+  INSERT = 'INSERT INTO paciente (nome, sobrenome, cpf, dataNascimento) values (?, ?, ?, ?)';
 
   DELETE = 'DELETE FROM paciente WHERE id = ?';
 
@@ -30,7 +30,7 @@ export default class PacienteRepository {
       transaction.executeSql(this.CREATE, []);
       transaction.executeSql(
         this.INSERT,
-        [paciente.name, paciente.sobrenome, paciente.cpf, paciente.dataNascimento],
+        [paciente.nome, paciente.sobrenome, paciente.cpf, paciente.dataNascimento],
         onSuccess,
         onError,
       );

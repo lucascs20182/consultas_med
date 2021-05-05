@@ -40,7 +40,7 @@ const styles = StyleSheet.create({
 
 export default function Lista(props) {
  
-  const [name, setName] = useState('');
+  const [nome, setName] = useState('');
   const [sobrenome, setSobrenome] = useState('');
   const [cpf, setCpf] = useState('');
   const [dataNascimento, setDataNascimento] = useState('');
@@ -50,7 +50,7 @@ export default function Lista(props) {
     const repository = new PacienteRepository();
     
     //Adicionando nova pessoa
-    repository.Save({name, sobrenome, cpf, dataNascimento}, () => {
+    repository.Save({nome, sobrenome, cpf, dataNascimento}, () => {
       //Informando que o cadastro foi feito com sucesso
       alert('Salvo com Sucesso');
 
@@ -76,7 +76,7 @@ export default function Lista(props) {
               <Form>
                 <Item>
                   <Input
-                    value={name}
+                    value={nome}
                     onChangeText={(text) => setName(text)}
                     placeholder="Nome"
                   />

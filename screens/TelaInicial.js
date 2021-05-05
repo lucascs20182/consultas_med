@@ -19,6 +19,7 @@ import {
 import {SafeAreaView, StyleSheet, ScrollView, View, Image} from 'react-native';
 import PacienteRepository from '../repositories/paciente';
 import MedicoRepository from '../repositories/medico';
+import ConsultaRepository from '../repositories/consulta';
 import {useState} from 'react';
 
 const styles = StyleSheet.create({
@@ -39,6 +40,7 @@ const styles = StyleSheet.create({
 const TelaInicial = (props) => {
   const [paciente, setPaciente] = useState([]);
   const [medico, setMedico] = useState([]);
+  const [consulta, setConsulta] = useState([]);
 
   const retrieveData = (Repository, setItem) => {
     const repository = new Repository();
@@ -57,6 +59,7 @@ const TelaInicial = (props) => {
   React.useEffect(() => {
     retrieveData(PacienteRepository, setPaciente);
     retrieveData(MedicoRepository, setMedico);
+    retrieveData(ConsultaRepository, setConsulta);
   }, []);
 
   return (
@@ -70,7 +73,7 @@ const TelaInicial = (props) => {
                   <ListItem key={index}>
                     <Body>
                       <Text>{`Paciente ${paciente.id}`}</Text>
-                      <Text>{`nome: ${paciente.name}`}</Text>
+                      <Text>{`nome: ${paciente.nome}`}</Text>
                       <Text>{`sobrenome: ${paciente.sobrenome}`}</Text>
                       <Text>{`cpf: ${paciente.cpf}`}</Text>
                       <Text>{`data de nascimento: ${paciente.dataNascimento}`}</Text>
@@ -100,7 +103,7 @@ const TelaInicial = (props) => {
                 <ListItem key={index}>
                   <Body>
                     <Text>{`Médico ${medico.id}`}</Text>
-                    <Text>{`nome: ${medico.name}`}</Text>
+                    <Text>{`nome: ${medico.nome}`}</Text>
                     <Text>{`sobrenome: ${medico.sobrenome}`}</Text>
                     <Text>{`crm: ${medico.crm}`}</Text>
                     <Text>{`especialidade: ${medico.especialidade}`}</Text>
@@ -124,6 +127,18 @@ const TelaInicial = (props) => {
             </View>
         </Tab>
         <Tab heading="Consultas marcadas">
+            <List> 
+              {consulta.map((consulta, index) => (
+                <ListItem key={index}>
+                  <Body>
+                    <Text>{`Paciente: ${consulta.paciente_nome}`}</Text>
+                    <Text>{`Médico ${consulta.medico_id}`}</Text>
+                    <Text>{`Data da consulta: ${consulta.dataConsulta}`}</Text>
+                  </Body>
+                </ListItem>
+              ))}
+            </List>
+
             <View
               style={styles.viewAddButton}>
               <Button
@@ -131,7 +146,7 @@ const TelaInicial = (props) => {
                 dark
                 style={styles.addButton}
                 onPress={() => {             
-                  props.navigation.navigate('Form');
+                  props.navigation.navigate('FormConsulta');
 
                 }}>
                 <Icon type="FontAwesome" name="plus" />

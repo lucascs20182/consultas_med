@@ -22,24 +22,7 @@ import PersonRepository from '../repositories/person';
 import {useState} from 'react';
 
 const styles = StyleSheet.create({
-  safeArea: {
-    flex: 1,
-  },
-  container: {
-    flex: 1,
-  },
-  scrollView: {
-    flex: 1,
-  },
-  content: {
-    flex: 1,
-  },
-  photo: {
-    width: 70,
-    height: 70,
-    borderWidth: 2,
-    borderRadius: 35,
-  },
+  
 });
 
 export default function Lista(props) {
@@ -55,6 +38,9 @@ export default function Lista(props) {
         data.push(results.rows.item(i));
       }
 
+      // accordion?
+      // console.log(data); //array de objetos
+
       setPeople(data);
     });
   };
@@ -64,14 +50,10 @@ export default function Lista(props) {
   }, []);
 
   return (
-    <StyleProvider style={getTheme(Custom)}>
-      <SafeAreaView style={styles.safeArea}>
+      <Content style={styles.safeArea}>
+        <StyleProvider style={getTheme(Custom)}>
+      {/* <SafeAreaView style={styles.safeArea}> */}
         <Container style={styles.container}>
-          <Header>
-            <Body>
-              <Title>Pessoas</Title>
-            </Body>
-          </Header>
           <Content style={styles.content}>
             <ScrollView style={styles.scrollView}>
               <List>
@@ -90,7 +72,7 @@ export default function Lista(props) {
         <View
           style={{
             position: 'absolute',
-            bottom: 25,
+            bottom: 150,
             right: 25,
           }}>
           <Button
@@ -108,7 +90,8 @@ export default function Lista(props) {
             <Icon type="FontAwesome" name="plus" />
           </Button>
         </View>
-      </SafeAreaView>
-    </StyleProvider>
+        {/* </SafeAreaView> */}
+        </StyleProvider>
+      </Content>
   );
 }

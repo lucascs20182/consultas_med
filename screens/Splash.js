@@ -28,7 +28,7 @@ export default function Splash(props) {
   const navigation = props.navigation;
   
   const goToList = () => {
-    navigation.replace('List');
+    navigation.replace('TelaInicial');
   };
 
   //Use Effect é executado quando o componente é montado

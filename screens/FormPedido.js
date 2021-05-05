@@ -17,7 +17,7 @@ import {
 } from 'native-base';
 
 import {SafeAreaView, StyleSheet, ScrollView, View} from 'react-native';
-import PacienteRepository from '../repositories/paciente';
+import MedicoRepository from '../repositories/medico';
 import store from '../redux/store';
 import {ADD_PERSON} from '../redux/actions';
 import {useState} from 'react';
@@ -40,17 +40,17 @@ const styles = StyleSheet.create({
 
 export default function Lista(props) {
  
-  const [name, setName] = useState('');
+  const [nome, setNome] = useState('');
   const [sobrenome, setSobrenome] = useState('');
-  const [cpf, setCpf] = useState('');
-  const [dataNascimento, setDataNascimento] = useState('');
+  const [crm, setCrm] = useState('');
+  const [especialidade, setEspecialidade] = useState('');
 
-  const savePaciente = () => {
+  const saveMedico = () => {
 
-    const repository = new PacienteRepository();
+    const repository = new MedicoRepository();
     
     //Adicionando nova pessoa
-    repository.Save({name, sobrenome, cpf, dataNascimento}, () => {
+    repository.Save({nome, sobrenome, crm, especialidade}, () => {
       //Informando que o cadastro foi feito com sucesso
       alert('Salvo com Sucesso');
 
@@ -68,7 +68,7 @@ export default function Lista(props) {
         <Container style={styles.container}>
           <Header>
             <Body>
-              <Title>Cadastro de paciente</Title>
+              <Title>Cadastro de médico</Title>
             </Body>
           </Header>
           <Content style={styles.content}>
@@ -76,8 +76,8 @@ export default function Lista(props) {
               <Form>
                 <Item>
                   <Input
-                    value={name}
-                    onChangeText={(text) => setName(text)}
+                    value={nome}
+                    onChangeText={(text) => setNome(text)}
                     placeholder="Nome"
                   />
                 </Item>
@@ -90,16 +90,16 @@ export default function Lista(props) {
                 </Item>
                 <Item>
                   <Input
-                    value={cpf}
-                    onChangeText={(text) => setCpf(text)}
-                    placeholder="CPF"
+                    value={crm}
+                    onChangeText={(text) => setCrm(text)}
+                    placeholder="CRM"
                   />
                 </Item>
                 <Item>
                   <Input
-                    value={dataNascimento}
-                    onChangeText={(text) => setDataNascimento(text)}
-                    placeholder="Data de Nascimento"
+                    value={especialidade}
+                    onChangeText={(text) => setEspecialidade(text)}
+                    placeholder="Especialidade"
                   />
                 </Item>
               </Form>
@@ -120,7 +120,7 @@ export default function Lista(props) {
               height: 50,
               width: 50,
             }}
-            onPress={savePaciente}>
+            onPress={saveMedico}>
             <Icon type="FontAwesome" name="save" />
           </Button>
         </View>

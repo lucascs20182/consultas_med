@@ -17,7 +17,8 @@ import {
 
 // import store from '../redux/store';
 import {SafeAreaView, StyleSheet, ScrollView, View, Image} from 'react-native';
-import PersonRepository from '../repositories/person';
+import PacienteRepository from '../repositories/paciente';
+import MedicoRepository from '../repositories/medico';
 import {useState} from 'react';
 
 const styles = StyleSheet.create({
@@ -36,10 +37,11 @@ const styles = StyleSheet.create({
 // import List from '../screens/List';
 
 const TelaInicial = (props) => {
-  const [people, setPeople] = useState([]);
+  const [paciente, setPaciente] = useState([]);
+  const [medico, setMedico] = useState([]);
 
-  const retrieveData = () => {
-    const repository = new PersonRepository();
+  const retrieveData = (Repository, setItem) => {
+    const repository = new Repository();
     repository.Retrieve((tx, results) => {
       
       let data = [];
@@ -48,12 +50,13 @@ const TelaInicial = (props) => {
         data.push(results.rows.item(i));
       }
 
-      setPeople(data);
+      setItem(data);
     });
   };
 
   React.useEffect(() => {
-    retrieveData();
+    retrieveData(PacienteRepository, setPaciente);
+    retrieveData(MedicoRepository, setMedico);
   }, []);
 
   return (
@@ -63,14 +66,14 @@ const TelaInicial = (props) => {
         <Tab heading="Pacientes cadastrados">
             <ScrollView style={styles.scrollView}>
               <List> 
-                {people.map((person, index) => (
-                  <ListItem key={`person-${index}`}>
+                {paciente.map((paciente, index) => (
+                  <ListItem key={index}>
                     <Body>
-                      <Text>{`Paciente ${person.id}`}</Text>
-                      <Text>{`nome: ${person.name}`}</Text>
-                      <Text>{`sobrenome: ${person.sobrenome}`}</Text>
-                      <Text>{`cpf: ${person.cpf}`}</Text>
-                      <Text>{`data de nascimento: ${person.dataNascimento}`}</Text>
+                      <Text>{`Paciente ${paciente.id}`}</Text>
+                      <Text>{`nome: ${paciente.name}`}</Text>
+                      <Text>{`sobrenome: ${paciente.sobrenome}`}</Text>
+                      <Text>{`cpf: ${paciente.cpf}`}</Text>
+                      <Text>{`data de nascimento: ${paciente.dataNascimento}`}</Text>
                     </Body>
                   </ListItem>
                 ))}
@@ -92,6 +95,20 @@ const TelaInicial = (props) => {
             </View>
         </Tab>
         <Tab heading="Médicos/Funcionários">
+            <List> 
+              {medico.map((medico, index) => (
+                <ListItem key={index}>
+                  <Body>
+                    <Text>{`Médico ${medico.id}`}</Text>
+                    <Text>{`nome: ${medico.name}`}</Text>
+                    <Text>{`sobrenome: ${medico.sobrenome}`}</Text>
+                    <Text>{`crm: ${medico.crm}`}</Text>
+                    <Text>{`especialidade: ${medico.especialidade}`}</Text>
+                  </Body>
+                </ListItem>
+              ))}
+            </List>
+
             <View
               style={styles.viewAddButton}>
               <Button
@@ -99,7 +116,7 @@ const TelaInicial = (props) => {
                 dark
                 style={styles.addButton}
                 onPress={() => {             
-                  props.navigation.navigate('Form');
+                  props.navigation.navigate('FormMedico');
 
                 }}>
                 <Icon type="FontAwesome" name="plus" />

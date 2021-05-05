@@ -1,16 +1,16 @@
 import {openDatabase} from 'react-native-sqlite-storage';
 
-export default class PersonRepository {
+export default class PacienteRepository {
 
   DBNAME = 'app.db';
   CREATE =
-    'CREATE TABLE IF NOT EXISTS person(id INTEGER PRIMARY KEY AUTOINCREMENT, name VARCHAR(100), sobrenome VARCHAR(100), cpf VARCHAR(11),  dataNascimento VARCHAR(10))';
+    'CREATE TABLE IF NOT EXISTS paciente(id INTEGER PRIMARY KEY AUTOINCREMENT, name VARCHAR(100), sobrenome VARCHAR(100), cpf VARCHAR(11),  dataNascimento VARCHAR(10))';
 
-  SELECT = 'SELECT * FROM person';
+  SELECT = 'SELECT * FROM paciente';
 
-  INSERT = 'INSERT INTO person (name, sobrenome, cpf, dataNascimento) values (?, ?, ?, ?)';
+  INSERT = 'INSERT INTO paciente (name, sobrenome, cpf, dataNascimento) values (?, ?, ?, ?)';
 
-  DELETE = 'DELETE FROM person WHERE id = ?';
+  DELETE = 'DELETE FROM paciente WHERE id = ?';
 
   Retrieve(onSuccess, onError) {
 
@@ -23,25 +23,25 @@ export default class PersonRepository {
 
   }
 
-  Save(person, onSuccess, onError) {
+  Save(paciente, onSuccess, onError) {
     var db = openDatabase({name: this.DBNAME});
 
     db.transaction((transaction) => {
       transaction.executeSql(this.CREATE, []);
       transaction.executeSql(
         this.INSERT,
-        [person.name, person.sobrenome, person.cpf, person.dataNascimento],
+        [paciente.name, paciente.sobrenome, paciente.cpf, paciente.dataNascimento],
         onSuccess,
         onError,
       );
     });
   }
 
-  Delete(person, onSuccess, onError) {
+  Delete(paciente, onSuccess, onError) {
     var db = openDatabase({name: this.DBNAME});
 
     db.transaction((transaction) => {
-      transaction.executeSql(this.DELETE, [person.id], onSuccess, onError);
+      transaction.executeSql(this.DELETE, [paciente.id], onSuccess, onError);
     });
   }
 }

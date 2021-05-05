@@ -29,6 +29,10 @@ const styles = StyleSheet.create({
     right: 20
   },
 
+  viewEditRemoveButton: {
+    flexDirection: 'row'
+  },
+
   addButton: {
     height: 50,
     width: 50
@@ -78,22 +82,38 @@ const TelaInicial = (props) => {
     });
   };
 
-  const deleteData = (id) => {
+  const deletePaciente = (id) => {
     const repository = new PacienteRepository();
-
-    console.log("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaainiciando delete")
     
       repository.Delete({id}, function() {
-      console.log("depois delete")
 
       retrieveData(PacienteRepository, setPaciente);
-      // console.log(paciente)
-
-      // setPaciente(paciente)
-      // alert('deletado com Sucesso');
-
     }, function(erro) {
-      // alert('Erro durante a remoção');
+      alert('Erro durante a remoção');
+      console.log(erro)
+    });
+  };
+
+  const deleteMedico = (id) => {
+    const repository = new MedicoRepository();
+    
+      repository.Delete({id}, function() {
+
+      retrieveData(MedicoRepository, setMedico);
+    }, function(erro) {
+      alert('Erro durante a remoção');
+      console.log(erro)
+    });
+  };
+
+  const deleteConsulta = (id) => {
+    const repository = new ConsultaRepository();
+    
+      repository.Delete({id}, function() {
+
+      retrieveData(ConsultaRepository, setConsulta);
+    }, function(erro) {
+      alert('Erro durante a remoção');
       console.log(erro)
     });
   };
@@ -121,14 +141,14 @@ const TelaInicial = (props) => {
                     <Text>{`data de nascimento: ${value.dataNascimento}`}</Text>
                   </Body>
 
-                  <View style={{flexDirection: 'row'}}>
+                  <View style={styles.viewEditRemoveButton}>
                     <Button style={styles.editPaciente} >
                       <TouchableOpacity>
                         <Text style={{ width: "100%", color: '#000', fontSize: 12 }}>Editar</Text>
                       </TouchableOpacity>
                     </Button>
 
-                    <Button style={styles.delPaciente} onPress={() => deleteData(value.id)}>
+                    <Button style={styles.delPaciente} onPress={() => deletePaciente(value.id)}>
                       <TouchableOpacity>
                         <Text style={{ width: "100%", color: 'white', fontSize: 12 }}>Excluir</Text>
                       </TouchableOpacity>
@@ -155,24 +175,24 @@ const TelaInicial = (props) => {
         </Tab>
         <Tab heading="Médicos/Funcionários">
           <List>
-            {medico.map((medico, index) => (
+            {medico.map((value, index) => (
               <ListItem key={index}>
                 <Body>
-                  <Text>{`Médico ${medico.id}`}</Text>
-                  <Text>{`nome: ${medico.nome}`}</Text>
-                  <Text>{`sobrenome: ${medico.sobrenome}`}</Text>
-                  <Text>{`crm: ${medico.crm}`}</Text>
-                  <Text>{`especialidade: ${medico.especialidade}`}</Text>
+                  <Text>{`Médico ${value.id}`}</Text>
+                  <Text>{`nome: ${value.nome}`}</Text>
+                  <Text>{`sobrenome: ${value.sobrenome}`}</Text>
+                  <Text>{`crm: ${value.crm}`}</Text>
+                  <Text>{`especialidade: ${value.especialidade}`}</Text>
                 </Body>
 
-                <View>
+                <View style={styles.viewEditRemoveButton}>
                   <Button style={styles.editPaciente}>
                     <TouchableOpacity>
                       <Text style={{ width: "100%", color: '#000', fontSize: 12 }}>Editar</Text>
                     </TouchableOpacity>
                   </Button>
 
-                  <Button style={styles.delPaciente}>
+                  <Button style={styles.delPaciente} onPress={() => deleteMedico(value.id)}>
                     <TouchableOpacity>
                       <Text style={{ width: "100%", color: 'white', fontSize: 12 }}>Excluir</Text>
                     </TouchableOpacity>
@@ -198,22 +218,22 @@ const TelaInicial = (props) => {
         </Tab>
         <Tab heading="Consultas marcadas">
           <List>
-            {consulta.map((valor, index) => (
+            {consulta.map((value, index) => (
               <ListItem key={index}>
                 <Body>
-                  <Text>{`Paciente: ${valor.idPaciente}`}</Text>
-                  <Text>{`Médico ${valor.idMedico}`}</Text>
-                  <Text>{`Data da consulta: ${valor.dataConsulta}`}</Text>
+                  <Text>{`Paciente: ${value.idPaciente}`}</Text>
+                  <Text>{`Médico ${value.idMedico}`}</Text>
+                  <Text>{`Data da consulta: ${value.dataConsulta}`}</Text>
                 </Body>
 
-                <View>
+                <View style={styles.viewEditRemoveButton}>
                   <Button style={styles.editPaciente}>
                     <TouchableOpacity>
                       <Text style={{ width: "100%", color: '#000', fontSize: 12 }}>Editar</Text>
                     </TouchableOpacity>
                   </Button>
 
-                  <Button style={styles.delPaciente}>
+                  <Button style={styles.delPaciente} onPress={() => deleteConsulta(value.id)}>
                     <TouchableOpacity>
                       <Text style={{ width: "100%", color: 'white', fontSize: 12 }}>Excluir</Text>
                     </TouchableOpacity>

@@ -54,7 +54,7 @@ export default function Lista(props) {
 
       //Retornando a tela inicial
       const navigation = props.navigation;
-      navigation.replace('List');
+      navigation.replace('TelaInicial');
     }, (e) => {
       alert('Erro durante salvamento');
     });

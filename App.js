@@ -5,7 +5,7 @@ import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
 
 import Splash from './screens/Splash';
-import List from './screens/List';
+// import List from './screens/List';
 import Form from './screens/Form';
 import TelaInicial from './screens/TelaInicial';
 import store from './redux/store';
@@ -22,7 +22,7 @@ const App = () => {
           }}>
           <Stack.Screen name="Splash" component={Splash} />
           <Stack.Screen name="TelaInicial" component={TelaInicial} />
-          <Stack.Screen name="List" component={List} />
+          {/* <Stack.Screen name="List" component={List} /> */}
           <Stack.Screen name="Form" component={Form} />
         </Stack.Navigator>
       </NavigationContainer>

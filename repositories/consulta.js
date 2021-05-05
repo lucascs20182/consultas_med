@@ -4,11 +4,11 @@ export default class ConsultaRepository {
 
   DBNAME = 'app.db';
   CREATE =
-    'CREATE TABLE IF NOT EXISTS consulta(id INTEGER PRIMARY KEY AUTOINCREMENT, id_paciente INTEGER, id_medico INTEGER, dataConsulta VARCHAR(40) ,FOREIGN KEY(id_paciente) REFERENCES paciente(id), FOREIGN KEY(id_medico) REFERENCES medico(id))';
+    'CREATE TABLE IF NOT EXISTS consulta(id INTEGER PRIMARY KEY AUTOINCREMENT, idPaciente INTEGER, idMedico INTEGER, dataConsulta VARCHAR(40) ,FOREIGN KEY(idPaciente) REFERENCES paciente(id), FOREIGN KEY(idMedico) REFERENCES medico(id))';
 
   SELECT = 'SELECT * FROM consulta';
 
-  INSERT = 'INSERT INTO consulta (id_paciente, id_medico, dataConsulta) values (?, ?, ?)';
+  INSERT = 'INSERT INTO consulta (idPaciente, idMedico, dataConsulta) values (?, ?, ?)';
 
   DELETE = 'DELETE FROM consulta WHERE id = ?';
 
@@ -30,7 +30,7 @@ export default class ConsultaRepository {
       transaction.executeSql(this.CREATE, []);
       transaction.executeSql(
         this.INSERT,
-        [consulta.id_paciente, consulta.id_medico, consulta.dataConsulta],
+        [consulta.idPaciente, consulta.idMedico, consulta.dataConsulta],
         onSuccess,
         onError,
       );

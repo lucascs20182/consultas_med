@@ -128,12 +128,12 @@ const TelaInicial = (props) => {
         </Tab>
         <Tab heading="Consultas marcadas">
             <List> 
-              {consulta.map((consulta, index) => (
+              {consulta.map((valor, index) => (
                 <ListItem key={index}>
                   <Body>
-                    <Text>{`Paciente: ${consulta.paciente_nome}`}</Text>
-                    <Text>{`Médico ${consulta.medico_id}`}</Text>
-                    <Text>{`Data da consulta: ${consulta.dataConsulta}`}</Text>
+                    <Text>{`Paciente: ${valor.idPaciente}`}</Text>
+                    <Text>{`Médico ${valor.idMedico}`}</Text>
+                    <Text>{`Data da consulta: ${valor.dataConsulta}`}</Text>
                   </Body>
                 </ListItem>
               ))}

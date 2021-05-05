@@ -49,8 +49,8 @@ export default function Lista(props) {
     const [paciente, setPaciente] = useState([]);
     const [medico, setMedico] = useState([]);
 
-    const [pacienteDaConsulta, setPacienteDaConsulta] = useState('');
-    const [medicoDaConsulta, setMedicoDaConsulta] = useState('');
+    const [idPaciente, setIdPaciente] = useState(0);
+    const [idMedico, setIdMedico] = useState(0);
     const [dataConsulta, setDataConsulta] = useState('');
 
     const retrieveData = (Repository, setItem) => {
@@ -85,7 +85,7 @@ export default function Lista(props) {
     const repository = new ConsultaRepository();
     
     //Adicionando nova pessoa
-    repository.Save({pacienteDaConsulta, medicoDaConsulta, dataConsulta}, () => {
+    repository.Save({idPaciente, idMedico, dataConsulta}, () => {
       //Informando que o cadastro foi feito com sucesso
       alert('Salvo com Sucesso');
 
@@ -110,12 +110,12 @@ export default function Lista(props) {
             <ScrollView style={styles.scrollView}>
               <Form>
                 <Picker selectedValue={paciente} 
-                    onValueChange={(item) => setPacienteDaConsulta(item)}>
+                    onValueChange={(item) => setIdPaciente(item)}>
                         {listarItens(paciente)}
                 </Picker>
 
                 <Picker selectedValue={medico} 
-                    onValueChange={(item) => setMedicoDaConsulta(item)}>
+                    onValueChange={(item) => setIdMedico(item)}>
                         {listarItens(medico)}
                 </Picker>
                 

@@ -66,7 +66,11 @@ const TelaInicial = (props) => {
                 {people.map((person, index) => (
                   <ListItem key={`person-${index}`}>
                     <Body>
+                      <Text>{`Paciente ${person.id}:`}</Text>
                       <Text>{person.name}</Text>
+                      <Text>{person.sobrenome}</Text>
+                      <Text>{person.cpf}</Text>
+                      <Text>{person.dataNascimento}</Text>
                     </Body>
                   </ListItem>
                 ))}

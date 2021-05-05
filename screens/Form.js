@@ -41,14 +41,16 @@ const styles = StyleSheet.create({
 export default function Lista(props) {
  
   const [name, setName] = useState('');
-  const [birthday, setBirthday] = useState('');
+  const [sobrenome, setSobrenome] = useState('');
+  const [cpf, setCpf] = useState('');
+  const [dataNascimento, setDataNascimento] = useState('');
 
   const savePerson = () => {
 
     const repository = new PersonRepository();
     
     //Adicionando nova pessoa
-    repository.Save({name, birthday}, () => {
+    repository.Save({name, sobrenome, cpf, dataNascimento}, () => {
       //Informando que o cadastro foi feito com sucesso
       alert('Salvo com Sucesso');
 
@@ -81,8 +83,22 @@ export default function Lista(props) {
                 </Item>
                 <Item>
                   <Input
-                    value={birthday}
-                    onChangeText={(text) => setBirthday(text)}
+                    value={sobrenome}
+                    onChangeText={(text) => setSobrenome(text)}
+                    placeholder="Sobrenome"
+                  />
+                </Item>
+                <Item>
+                  <Input
+                    value={cpf}
+                    onChangeText={(text) => setCpf(text)}
+                    placeholder="CPF"
+                  />
+                </Item>
+                <Item>
+                  <Input
+                    value={dataNascimento}
+                    onChangeText={(text) => setDataNascimento(text)}
                     placeholder="Data de Nascimento"
                   />
                 </Item>

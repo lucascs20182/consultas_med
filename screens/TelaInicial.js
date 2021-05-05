@@ -16,22 +16,44 @@ import {
 } from 'native-base';
 
 // import store from '../redux/store';
-import {SafeAreaView, StyleSheet, ScrollView, View, Image} from 'react-native';
+import { SafeAreaView, StyleSheet, ScrollView, View, Image, TouchableOpacity } from 'react-native';
 import PacienteRepository from '../repositories/paciente';
 import MedicoRepository from '../repositories/medico';
 import ConsultaRepository from '../repositories/consulta';
-import {useState} from 'react';
+import { useState } from 'react';
 
 const styles = StyleSheet.create({
   viewAddButton: {
     position: 'absolute',
     bottom: 25,
-    right: 25
+    right: 20
   },
-  
+
   addButton: {
     height: 50,
     width: 50
+  },
+
+  editPaciente: {
+    width: 70,
+    height: 38,
+    bottom: 25,
+    tintColor: "#000",
+    backgroundColor: 'rgb(232, 218, 58)',
+    resizeMode: 'contain',
+    borderRadius: 20,
+    justifyContent: 'center'
+  },
+  delPaciente: {
+    width: 70,
+    height: 38,
+    bottom: 25,
+    left: 10,
+    resizeMode: 'contain',
+    backgroundColor: 'rgb(245, 105, 105)',
+    borderRadius: 20,
+    justifyContent: 'center',
+    // marginTop: 20
   },
 });
 
@@ -45,7 +67,7 @@ const TelaInicial = (props) => {
   const retrieveData = (Repository, setItem) => {
     const repository = new Repository();
     repository.Retrieve((tx, results) => {
-      
+
       let data = [];
 
       for (let i = 0; i < results.rows.length; i++) {
@@ -53,6 +75,26 @@ const TelaInicial = (props) => {
       }
 
       setItem(data);
+    });
+  };
+
+  const deleteData = (id) => {
+    const repository = new PacienteRepository();
+
+    console.log("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaainiciando delete")
+    
+      repository.Delete({id}, function() {
+      console.log("depois delete")
+
+      retrieveData(PacienteRepository, setPaciente);
+      // console.log(paciente)
+
+      // setPaciente(paciente)
+      // alert('deletado com Sucesso');
+
+    }, function(erro) {
+      // alert('Erro durante a remoção');
+      console.log(erro)
     });
   };
 
@@ -67,91 +109,133 @@ const TelaInicial = (props) => {
       <Header hasTabs />
       <Tabs>
         <Tab heading="Pacientes cadastrados">
-            <ScrollView style={styles.scrollView}>
-              <List> 
-                {paciente.map((paciente, index) => (
-                  <ListItem key={index}>
-                    <Body>
-                      <Text>{`Paciente ${paciente.id}`}</Text>
-                      <Text>{`nome: ${paciente.nome}`}</Text>
-                      <Text>{`sobrenome: ${paciente.sobrenome}`}</Text>
-                      <Text>{`cpf: ${paciente.cpf}`}</Text>
-                      <Text>{`data de nascimento: ${paciente.dataNascimento}`}</Text>
-                    </Body>
-                  </ListItem>
-                ))}
-              </List>
-            </ScrollView>
+          <ScrollView style={styles.scrollView}>
+            <List>
+              {paciente.map((value, index) => (
+                <ListItem key={index}>
+                  <Body>
+                    <Text>{`Paciente ${value.id}`}</Text>
+                    <Text>{`nome: ${value.nome}`}</Text>
+                    <Text>{`sobrenome: ${value.sobrenome}`}</Text>
+                    <Text>{`cpf: ${value.cpf}`}</Text>
+                    <Text>{`data de nascimento: ${value.dataNascimento}`}</Text>
+                  </Body>
 
-            <View
-              style={styles.viewAddButton}>
-              <Button
-                rounded
-                dark
-                style={styles.addButton}
-                onPress={() => {             
-                  props.navigation.navigate('Form');
+                  <View style={{flexDirection: 'row'}}>
+                    <Button style={styles.editPaciente} >
+                      <TouchableOpacity>
+                        <Text style={{ width: "100%", color: '#000', fontSize: 12 }}>Editar</Text>
+                      </TouchableOpacity>
+                    </Button>
 
-                }}>
-                <Icon type="FontAwesome" name="plus" />
-              </Button>
-            </View>
+                    <Button style={styles.delPaciente} onPress={() => deleteData(value.id)}>
+                      <TouchableOpacity>
+                        <Text style={{ width: "100%", color: 'white', fontSize: 12 }}>Excluir</Text>
+                      </TouchableOpacity>
+                    </Button>
+                  </View>
+                </ListItem>
+              ))}
+            </List>
+          </ScrollView>
+
+          <View
+            style={styles.viewAddButton}>
+            <Button
+              rounded
+              dark
+              style={styles.addButton}
+              onPress={() => {
+                props.navigation.navigate('Form');
+
+              }}>
+              <Icon type="FontAwesome" name="plus" />
+            </Button>
+          </View>
         </Tab>
         <Tab heading="Médicos/Funcionários">
-            <List> 
-              {medico.map((medico, index) => (
-                <ListItem key={index}>
-                  <Body>
-                    <Text>{`Médico ${medico.id}`}</Text>
-                    <Text>{`nome: ${medico.nome}`}</Text>
-                    <Text>{`sobrenome: ${medico.sobrenome}`}</Text>
-                    <Text>{`crm: ${medico.crm}`}</Text>
-                    <Text>{`especialidade: ${medico.especialidade}`}</Text>
-                  </Body>
-                </ListItem>
-              ))}
-            </List>
+          <List>
+            {medico.map((medico, index) => (
+              <ListItem key={index}>
+                <Body>
+                  <Text>{`Médico ${medico.id}`}</Text>
+                  <Text>{`nome: ${medico.nome}`}</Text>
+                  <Text>{`sobrenome: ${medico.sobrenome}`}</Text>
+                  <Text>{`crm: ${medico.crm}`}</Text>
+                  <Text>{`especialidade: ${medico.especialidade}`}</Text>
+                </Body>
 
-            <View
-              style={styles.viewAddButton}>
-              <Button
-                rounded
-                dark
-                style={styles.addButton}
-                onPress={() => {             
-                  props.navigation.navigate('FormMedico');
+                <View>
+                  <Button style={styles.editPaciente}>
+                    <TouchableOpacity>
+                      <Text style={{ width: "100%", color: '#000', fontSize: 12 }}>Editar</Text>
+                    </TouchableOpacity>
+                  </Button>
 
-                }}>
-                <Icon type="FontAwesome" name="plus" />
-              </Button>
-            </View>
+                  <Button style={styles.delPaciente}>
+                    <TouchableOpacity>
+                      <Text style={{ width: "100%", color: 'white', fontSize: 12 }}>Excluir</Text>
+                    </TouchableOpacity>
+                  </Button>
+                </View>
+              </ListItem>
+            ))}
+          </List>
+
+          <View
+            style={styles.viewAddButton}>
+            <Button
+              rounded
+              dark
+              style={styles.addButton}
+              onPress={() => {
+                props.navigation.navigate('FormMedico');
+
+              }}>
+              <Icon type="FontAwesome" name="plus" />
+            </Button>
+          </View>
         </Tab>
         <Tab heading="Consultas marcadas">
-            <List> 
-              {consulta.map((valor, index) => (
-                <ListItem key={index}>
-                  <Body>
-                    <Text>{`Paciente: ${valor.idPaciente}`}</Text>
-                    <Text>{`Médico ${valor.idMedico}`}</Text>
-                    <Text>{`Data da consulta: ${valor.dataConsulta}`}</Text>
-                  </Body>
-                </ListItem>
-              ))}
-            </List>
+          <List>
+            {consulta.map((valor, index) => (
+              <ListItem key={index}>
+                <Body>
+                  <Text>{`Paciente: ${valor.idPaciente}`}</Text>
+                  <Text>{`Médico ${valor.idMedico}`}</Text>
+                  <Text>{`Data da consulta: ${valor.dataConsulta}`}</Text>
+                </Body>
 
-            <View
-              style={styles.viewAddButton}>
-              <Button
-                rounded
-                dark
-                style={styles.addButton}
-                onPress={() => {             
-                  props.navigation.navigate('FormConsulta');
+                <View>
+                  <Button style={styles.editPaciente}>
+                    <TouchableOpacity>
+                      <Text style={{ width: "100%", color: '#000', fontSize: 12 }}>Editar</Text>
+                    </TouchableOpacity>
+                  </Button>
 
-                }}>
-                <Icon type="FontAwesome" name="plus" />
-              </Button>
-            </View>
+                  <Button style={styles.delPaciente}>
+                    <TouchableOpacity>
+                      <Text style={{ width: "100%", color: 'white', fontSize: 12 }}>Excluir</Text>
+                    </TouchableOpacity>
+                  </Button>
+                </View>
+              </ListItem>
+            ))}
+          </List>
+
+          <View
+            style={styles.viewAddButton}>
+            <Button
+              rounded
+              dark
+              style={styles.addButton}
+              onPress={() => {
+                props.navigation.navigate('FormConsulta');
+
+              }}>
+              <Icon type="FontAwesome" name="plus" />
+            </Button>
+          </View>
         </Tab>
       </Tabs>
       <Footer />

@@ -21,7 +21,16 @@ import PersonRepository from '../repositories/person';
 import {useState} from 'react';
 
 const styles = StyleSheet.create({
+  viewAddButton: {
+    position: 'absolute',
+    bottom: 25,
+    right: 25
+  },
   
+  addButton: {
+    height: 50,
+    width: 50
+  },
 });
 
 // import List from '../screens/List';
@@ -39,9 +48,6 @@ const TelaInicial = (props) => {
         data.push(results.rows.item(i));
       }
 
-      // accordion?
-      // console.log(data); //array de objetos
-
       setPeople(data);
     });
   };
@@ -56,7 +62,7 @@ const TelaInicial = (props) => {
       <Tabs>
         <Tab heading="Pacientes cadastrados">
             <ScrollView style={styles.scrollView}>
-              <List>
+              <List> 
                 {people.map((person, index) => (
                   <ListItem key={`person-${index}`}>
                     <Body>
@@ -68,18 +74,11 @@ const TelaInicial = (props) => {
             </ScrollView>
 
             <View
-              style={{
-                position: 'absolute',
-                bottom: 25,
-                right: 25,
-              }}>
+              style={styles.viewAddButton}>
               <Button
                 rounded
                 dark
-                style={{
-                  height: 50,
-                  width: 50,
-                }}
+                style={styles.addButton}
                 onPress={() => {             
                   props.navigation.navigate('Form');
 
@@ -89,10 +88,34 @@ const TelaInicial = (props) => {
             </View>
         </Tab>
         <Tab heading="Médicos/Funcionários">
-          <Text>conteudo2</Text>
+            <View
+              style={styles.viewAddButton}>
+              <Button
+                rounded
+                dark
+                style={styles.addButton}
+                onPress={() => {             
+                  props.navigation.navigate('Form');
+
+                }}>
+                <Icon type="FontAwesome" name="plus" />
+              </Button>
+            </View>
         </Tab>
         <Tab heading="Consultas marcadas">
-          <Text>conteudo3</Text>
+            <View
+              style={styles.viewAddButton}>
+              <Button
+                rounded
+                dark
+                style={styles.addButton}
+                onPress={() => {             
+                  props.navigation.navigate('Form');
+
+                }}>
+                <Icon type="FontAwesome" name="plus" />
+              </Button>
+            </View>
         </Tab>
       </Tabs>
       <Footer />

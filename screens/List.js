@@ -50,10 +50,10 @@ export default function Lista(props) {
   }, []);
 
   return (
-      <Content style={styles.safeArea}>
-        <StyleProvider style={getTheme(Custom)}>
+      <Container style={styles.safeArea}>
+        {/* <StyleProvider style={getTheme(Custom)}> */}
       {/* <SafeAreaView style={styles.safeArea}> */}
-        <Container style={styles.container}>
+        {/* <Container style={styles.container}> */}
           <Content style={styles.content}>
             <ScrollView style={styles.scrollView}>
               <List>
@@ -67,12 +67,12 @@ export default function Lista(props) {
               </List>
             </ScrollView>
           </Content>
-        </Container>
+        {/* </Container> */}
 
-        <View
+        <Content
           style={{
             position: 'absolute',
-            bottom: 150,
+            bottom: 25,
             right: 25,
           }}>
           <Button
@@ -83,15 +83,15 @@ export default function Lista(props) {
               width: 50,
             }}
             onPress={() => {             
-              const navigation = props.navigation;
-              navigation.navigate('Form');
+              // const navigation = props.navigation;
+              props.navigation.navigate('Form');
 
             }}>
             <Icon type="FontAwesome" name="plus" />
           </Button>
-        </View>
+        </Content>
         {/* </SafeAreaView> */}
-        </StyleProvider>
-      </Content>
+        {/* </StyleProvider> */}
+      </Container>
   );
 }

@@ -21,6 +21,8 @@ import PacienteRepository from '../repositories/paciente';
 import store from '../redux/store';
 import {ADD_PERSON} from '../redux/actions';
 import {useState} from 'react';
+import { useRoute } from '@react-navigation/native';
+
 
 const styles = StyleSheet.create({
   safeArea: {
@@ -39,27 +41,25 @@ const styles = StyleSheet.create({
 });
 
 export default function Lista(props) {
+  const route = useRoute();
  
   const [nome, setName] = useState('');
   const [sobrenome, setSobrenome] = useState('');
   const [cpf, setCpf] = useState('');
   const [dataNascimento, setDataNascimento] = useState('');
-
-
-  const savePaciente = () => {
+  const [id, setId] = useState(route.params.id);
+  
+  const editPaciente = () => {
 
     const repository = new PacienteRepository();
     
-    //Adicionando nova pessoa
-    repository.Save({nome, sobrenome, cpf, dataNascimento}, () => {
-      //Informando que o cadastro foi feito com sucesso
-      alert('Salvo com Sucesso');
-
-      //Retornando a tela inicial
-      const navigation = props.navigation;
-      navigation.replace('TelaInicial');
+    repository.Edit({nome, sobrenome, cpf, dataNascimento, id}, () => {
+      alert('Editado com Sucesso');
+      
+      props.navigation.replace('TelaInicial');
     }, (e) => {
-      alert('Erro durante salvamento');
+      alert('Erro durante a edição');
+      console.log(e);
     });
   };
 
@@ -69,7 +69,7 @@ export default function Lista(props) {
         <Container style={styles.container}>
           <Header>
             <Body>
-              <Title>Cadastro de paciente</Title>
+              <Title>Edição de paciente</Title>
             </Body>
           </Header>
           <Content style={styles.content}>
@@ -79,28 +79,28 @@ export default function Lista(props) {
                   <Input
                     value={nome}
                     onChangeText={(text) => setName(text)}
-                    placeholder="Nome"
+                    placeholder={route.params.nome || "Nome"}
                   />
                 </Item>
                 <Item>
                   <Input
                     value={sobrenome}
                     onChangeText={(text) => setSobrenome(text)}
-                    placeholder="Sobrenome"
+                    placeholder={route.params.sobrenome || "Sobrenome"}
                   />
                 </Item>
                 <Item>
                   <Input
                     value={cpf}
                     onChangeText={(text) => setCpf(text)}
-                    placeholder="CPF"
+                    placeholder={route.params.cpf || "CPF"}
                   />
                 </Item>
                 <Item>
                   <Input
                     value={dataNascimento}
                     onChangeText={(text) => setDataNascimento(text)}
-                    placeholder="Data de Nascimento"
+                    placeholder={route.params.dataNascimento || "Data de nascimento"}
                   />
                 </Item>
               </Form>
@@ -121,8 +121,8 @@ export default function Lista(props) {
               height: 50,
               width: 50,
             }}
-            onPress={savePaciente}>
-            <Icon type="FontAwesome" name="save" />
+            onPress={editPaciente}>
+            <Icon type="FontAwesome" name="edit" />
           </Button>
         </View>
       </SafeAreaView>

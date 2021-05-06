@@ -17,13 +17,12 @@ import {
 } from 'native-base';
 
 import {SafeAreaView, StyleSheet, ScrollView, View} from 'react-native';
-import PacienteRepository from '../repositories/paciente';
+import MedicoRepository from '../repositories/medico';
 import store from '../redux/store';
 import {ADD_PERSON} from '../redux/actions';
 import {useState} from 'react';
 
 import { useRoute } from '@react-navigation/native';
-
 
 const styles = StyleSheet.create({
   safeArea: {
@@ -43,18 +42,17 @@ const styles = StyleSheet.create({
 
 export default function Lista(props) {
   const route = useRoute();
- 
-  const [nome, setName] = useState('');
-  const [sobrenome, setSobrenome] = useState('');
-  const [cpf, setCpf] = useState('');
-  const [dataNascimento, setDataNascimento] = useState('');
   const [id] = useState(route.params.id);
-  
-  const editPaciente = () => {
+ 
+  const [nome, setNome] = useState('');
+  const [sobrenome, setSobrenome] = useState('');
+  const [especialidade, setEspecialidade] = useState('');
+  const [crm, setCrm] = useState('');
 
-    const repository = new PacienteRepository();
-    
-    repository.Edit({nome, sobrenome, cpf, dataNascimento, id}, () => {
+  const editMedico = () => {
+
+    const repository = new MedicoRepository();
+    repository.Edit({nome, sobrenome, especialidade, crm, id}, () => {
       alert('Editado com Sucesso');
       
       props.navigation.replace('TelaInicial');
@@ -64,13 +62,30 @@ export default function Lista(props) {
     });
   };
 
+  const saveMedico = () => {
+
+    const repository = new MedicoRepository();
+    
+    //Adicionando nova pessoa
+    repository.Save({nome, sobrenome, crm, especialidade}, () => {
+      //Informando que o cadastro foi feito com sucesso
+      alert('Salvo com Sucesso');
+
+      //Retornando a tela inicial
+      const navigation = props.navigation;
+      navigation.replace('TelaInicial');
+    }, (e) => {
+      alert('Erro durante salvamento');
+    });
+  };
+
   return (
     <StyleProvider style={getTheme(Custom)}>
       <SafeAreaView style={styles.safeArea}>
         <Container style={styles.container}>
           <Header>
             <Body>
-              <Title>Edição de paciente</Title>
+              <Title>Cadastro de médico</Title>
             </Body>
           </Header>
           <Content style={styles.content}>
@@ -79,7 +94,7 @@ export default function Lista(props) {
                 <Item>
                   <Input
                     value={nome}
-                    onChangeText={(text) => setName(text)}
+                    onChangeText={(text) => setNome(text)}
                     placeholder={route.params.nome || "Nome"}
                   />
                 </Item>
@@ -92,16 +107,16 @@ export default function Lista(props) {
                 </Item>
                 <Item>
                   <Input
-                    value={cpf}
-                    onChangeText={(text) => setCpf(text)}
-                    placeholder={route.params.cpf || "CPF"}
+                    value={crm}
+                    onChangeText={(text) => setCrm(text)}
+                    placeholder={route.params.crm || "CRM"}
                   />
                 </Item>
                 <Item>
                   <Input
-                    value={dataNascimento}
-                    onChangeText={(text) => setDataNascimento(text)}
-                    placeholder={route.params.dataNascimento || "Data de nascimento"}
+                    value={especialidade}
+                    onChangeText={(text) => setEspecialidade(text)}
+                    placeholder={route.params.especialidade || "Especialidade"}
                   />
                 </Item>
               </Form>
@@ -122,7 +137,7 @@ export default function Lista(props) {
               height: 50,
               width: 50,
             }}
-            onPress={editPaciente}>
+            onPress={editMedico}>
             <Icon type="FontAwesome" name="edit" />
           </Button>
         </View>

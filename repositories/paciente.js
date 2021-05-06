@@ -44,7 +44,6 @@ export default class PacienteRepository {
     var db = openDatabase({name: this.DBNAME});
 
     db.transaction((transaction) => {
-      // console.log("dentro da transaction")
       transaction.executeSql(this.CREATE, []);
       transaction.executeSql(
         this.UPDATE,

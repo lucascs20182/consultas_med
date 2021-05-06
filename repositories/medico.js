@@ -10,6 +10,8 @@ export default class MedicoRepository {
 
   INSERT = 'INSERT INTO medico (nome, sobrenome, especialidade, crm) values (?, ?, ?, ?)';
 
+  UPDATE = 'UPDATE medico SET nome = ?, sobrenome = ?, especialidade = ?, crm = ? WHERE id = ?';
+
   DELETE = 'DELETE FROM medico WHERE id = ?';
 
   Retrieve(onSuccess, onError) {
@@ -33,6 +35,20 @@ export default class MedicoRepository {
         [medico.nome, medico.sobrenome, medico.especialidade, medico.crm],
         onSuccess,
         onError,
+      );
+    });
+  }
+
+  Edit(medico, onSuccess, onError) {
+    var db = openDatabase({name: this.DBNAME});
+
+    db.transaction((transaction) => {
+      transaction.executeSql(this.CREATE, []);
+      transaction.executeSql(
+        this.UPDATE,
+        [medico.nome, medico.sobrenome, medico.especialidade, medico.crm, medico.id],
+        onSuccess, 
+        onError
       );
     });
   }

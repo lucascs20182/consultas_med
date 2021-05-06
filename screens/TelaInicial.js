@@ -122,6 +122,14 @@ const TelaInicial = (props) => {
     props.navigation.navigate('EditarForm', paciente);
   };
 
+  const editaMedico = (medico) => {
+    props.navigation.navigate('EditarFormMedico', medico);
+  };
+
+  const editaConsulta = (consulta) => {
+    props.navigation.navigate('EditarFormConsulta', consulta);
+  };
+
   React.useEffect(() => {
     retrieveData(PacienteRepository, setPaciente);
     retrieveData(MedicoRepository, setMedico);
@@ -190,7 +198,7 @@ const TelaInicial = (props) => {
                 </Body>
 
                 <View style={styles.viewEditRemoveButton}>
-                  <Button style={styles.editPaciente}>
+                  <Button style={styles.editPaciente} onPress={() => editaMedico(value)}>
                     <TouchableOpacity>
                       <Text style={{ width: "100%", color: '#000', fontSize: 12 }}>Editar</Text>
                     </TouchableOpacity>
@@ -231,7 +239,7 @@ const TelaInicial = (props) => {
                 </Body>
 
                 <View style={styles.viewEditRemoveButton}>
-                  <Button style={styles.editPaciente}>
+                  <Button style={styles.editPaciente} onPress={() => editaConsulta(value)}>
                     <TouchableOpacity>
                       <Text style={{ width: "100%", color: '#000', fontSize: 12 }}>Editar</Text>
                     </TouchableOpacity>

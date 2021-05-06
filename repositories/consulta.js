@@ -10,6 +10,8 @@ export default class ConsultaRepository {
 
   INSERT = 'INSERT INTO consulta (idPaciente, idMedico, dataConsulta) values (?, ?, ?)';
 
+  UPDATE = 'UPDATE consulta SET idPaciente = ?, idMedico = ?, dataConsulta = ? WHERE id = ?';
+
   DELETE = 'DELETE FROM consulta WHERE id = ?';
 
   Retrieve(onSuccess, onError) {
@@ -33,6 +35,20 @@ export default class ConsultaRepository {
         [consulta.idPaciente, consulta.idMedico, consulta.dataConsulta],
         onSuccess,
         onError,
+      );
+    });
+  }
+
+  Edit(consulta, onSuccess, onError) {
+    var db = openDatabase({name: this.DBNAME});
+
+    db.transaction((transaction) => {
+      transaction.executeSql(this.CREATE, []);
+      transaction.executeSql(
+        this.UPDATE,
+        [consulta.idPaciente, consulta.idMedico, consulta.dataConsulta, consulta.id], 
+        onSuccess, 
+        onError
       );
     });
   }

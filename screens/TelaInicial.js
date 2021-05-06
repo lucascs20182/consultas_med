@@ -78,6 +78,7 @@ const TelaInicial = (props) => {
         data.push(results.rows.item(i));
       }
 
+      // console.log(data)
       setItem(data);
     });
   };
@@ -233,8 +234,22 @@ const TelaInicial = (props) => {
             {consulta.map((value, index) => (
               <ListItem key={index}>
                 <Body>
-                  <Text>{`Paciente: ${value.idPaciente}`}</Text>
-                  <Text>{`Médico ${value.idMedico}`}</Text>
+                {
+                    paciente.map((v, i) => {
+                      if(v.id == value.idPaciente) {
+                        return <Text>{`Paciente: ${v.nome}`}</Text>
+                      }
+                    })
+                  }
+
+                  {
+                    medico.map((v, i) => {
+                      if(v.id == value.idMedico) {
+                        return <Text>{`Médico: ${v.nome}`}</Text>
+                      }
+                    })
+                  }
+
                   <Text>{`Data da consulta: ${value.dataConsulta}`}</Text>
                 </Body>
 

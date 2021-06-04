@@ -4,7 +4,7 @@ import {SafeAreaView, StyleSheet, Image, View} from 'react-native';
 import {StyleProvider} from 'native-base';
 import getTheme from '../native-base-theme/components';
 import Custom from '../native-base-theme/variables/custom';
-import FesoLogo from '../resources/feso-logo.png';
+//import FesoLogo from '../resources/feso-logo.png';
 
 const styles = StyleSheet.create({
   safeArea: {
@@ -50,9 +50,12 @@ export default function Splash(props) {
             justifyContent: 'center',
             alignItems: 'center',
           }}>
-          <Image style={styles.logo} source={FesoLogo} />
+          
         </View>
       </SafeAreaView>
     </StyleProvider>
   );
 }
+
+
+//<Image style={styles.logo} source={FesoLogo} />

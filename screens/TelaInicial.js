@@ -59,6 +59,12 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     // marginTop: 20
   },
+
+  BotaoLogin: {
+    position: 'absolute',
+    bottom: 25,
+    left: 20
+  },
 });
 
 // import List from '../screens/List';
@@ -185,6 +191,28 @@ const TelaInicial = (props) => {
               <Icon type="FontAwesome" name="plus" />
             </Button>
           </View>
+
+                
+
+          <View
+              style={styles.BotaoLogin}>
+              <Button
+                rounded
+                dark
+                style={styles.addButton}
+                onPress={() => {
+                  props.navigation.navigate('Login');
+                }}>
+                <Icon type="FontAwesome" name="minus" />
+              </Button>
+          </View>
+
+
+
+
+
+
+
         </Tab>
         <Tab heading="Médicos/Funcionários">
           <List>

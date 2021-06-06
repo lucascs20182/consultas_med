@@ -26,6 +26,7 @@ export default function Login(props) {
         Animated.timing(opacity, {
             toValue: 1,
             duration: 1000,
+            useNativeDriver: true, //faz a maldita mensagem de erro sumir
         }).start();
 
     }, []);

@@ -15,6 +15,7 @@ import EditarFormConsulta from './screens/EditarFormConsulta';
 import TelaInicial from './screens/TelaInicial';
 import store from './redux/store';
 import Login from './screens/Login';
+import CriarConta from './screens/CriarConta';
 
 const Stack = createStackNavigator();
 
@@ -28,6 +29,7 @@ const App = () => {
           }}>
           <Stack.Screen name="Splash" component={Splash} />
           <Stack.Screen name="Login" component={Login} />
+          <Stack.Screen name="CriarConta" component={CriarConta} />
           <Stack.Screen name="TelaInicial" component={TelaInicial} />
           <Stack.Screen name="Form" component={Form} />
           <Stack.Screen name="EditarForm" component={EditarForm} />

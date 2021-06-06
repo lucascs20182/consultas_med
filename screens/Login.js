@@ -6,6 +6,18 @@ import {StyleSheet, Text, View, Image,
     SafeAreaView, Keyboard, TouchableOpacity, 
     KeyboardAvoidingView, Animated, } from 'react-native';
 
+    import {
+        Content,
+        Body,
+        StyleProvider,
+        Icon,
+        Button,
+        List,
+        ListItem,
+        Title,
+        Left
+      } from 'native-base';
+
 export default function Login(props) {
     const navigation = props.navigation;
 
@@ -23,6 +35,7 @@ export default function Login(props) {
       };
     return (
         <KeyboardAvoidingView style={styles.background}>
+            <StatusBar backgroundColor='#14207e' barStyle='light-content'/>
 
             <View style={styles.containerLogo}>
                 <Animated.Image
@@ -42,7 +55,7 @@ export default function Login(props) {
 
             <Animated.Image
                 style={
-                    styles.dedo
+                    styles.coiso
                 }
                 source={require('../resources/coiso.png')}
             
@@ -66,10 +79,15 @@ export default function Login(props) {
                 <Text style={styles.submitText}>Acessar</Text>
             </TouchableOpacity>
 
-            <TouchableOpacity style={styles.btnRegister}>
-                <Text style={styles.registerText}>Criar conta</Text>
-            </TouchableOpacity>
+            <View style={styles.viewCriarButton}>
+                    <Button style={styles.btnRegister} onPress={() => props.navigation.navigate('CriarConta')}>
+                      <TouchableOpacity>
+                        <Text style={styles.registerText}>Criar conta</Text>
+                      </TouchableOpacity>
+                    </Button>
             
+            </View>
+
 
             </Animatable.View>
         </KeyboardAvoidingView>
@@ -81,7 +99,7 @@ const styles = StyleSheet.create({
         flex: 1,
         alignItems: 'center',
         justifyContent: 'center',
-        backgroundColor: '#324291'
+        backgroundColor: '#14207e'
     },
 
     container:{
@@ -111,6 +129,7 @@ const styles = StyleSheet.create({
     },
 
     btnSubmit: {
+        marginBottom: 15,
         backgroundColor: '#117a6d',
         width: '90%',
         height: 45,
@@ -126,12 +145,30 @@ const styles = StyleSheet.create({
     },
 
     btnRegister:{
-        marginTop: 10,
+        //margin: 14,
+        backgroundColor: 'white',
+        borderColor: '#117a6d',
+        borderWidth: 1,
+        width: '90%',
+        height: 45,
+        alignItems: 'center',
+        justifyContent: 'center',
+        borderRadius: 7,
+
+        //width: 70,
+        //height: 38,
+        //bottom: 25,
+        //tintColor: "#000",
+        //backgroundColor: 'rgb(232, 218, 58)',
+        resizeMode: 'contain',
+        //borderRadius: 20,
+        //justifyContent: 'center'
         
     },
 
     registerText:{
-        color: 'black',
+        color: '#117a6d',
+        fontSize: 18,
     },
 
     containerLogo:{
@@ -145,15 +182,27 @@ const styles = StyleSheet.create({
         resizeMode: 'contain',
     },
 
-    dedo:{
+    coiso:{
         width: 80,
         height: 80,
-        //position: 'absolute',
-        marginBottom: 30,
-        //flexDirection: "column",
-        //justifyContent: "center",
-        //alignItems: "center",
+        marginBottom: 25,
     },
+
+    editPaciente: {
+        width: 70,
+        height: 38,
+        bottom: 25,
+        tintColor: "#000",
+        backgroundColor: 'rgb(232, 218, 58)',
+        resizeMode: 'contain',
+        borderRadius: 20,
+        justifyContent: 'center'
+    },
+
+    viewCriarButton: {
+        flexDirection: 'row'
+      },
+
 });
 
 

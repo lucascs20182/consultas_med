@@ -28,14 +28,12 @@ import {
   Left,
 } from 'native-base';
 
-// import UserRepository from '../repositories/user';
 import store from '../redux/store';
 import {api} from '../services/api';
 
 export default function Login(props) {
   const navigation = props.navigation;
 
-  // define os estados para armazenar username e senha
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 
@@ -44,7 +42,7 @@ export default function Login(props) {
     Animated.timing(opacity, {
       toValue: 1,
       duration: 1000,
-      useNativeDriver: true, //faz a maldita mensagem de erro sumir
+      useNativeDriver: true, 
     }).start();
   }, []);
 
@@ -58,7 +56,6 @@ export default function Login(props) {
       .post('/login', data)
       .then(() => navigation.replace('TelaInicial'))
       .catch(err => alert(err));
-    // navigation.replace('TelaInicial');
   };
 
   return (

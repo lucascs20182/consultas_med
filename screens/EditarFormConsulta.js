@@ -16,8 +16,6 @@ import {
     Item,
     Input,
     Title,
-    // Picker,
-    //   Toast
 } from 'native-base';
 
 import { SafeAreaView, StyleSheet, ScrollView, View } from 'react-native';

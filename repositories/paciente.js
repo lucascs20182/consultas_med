@@ -56,12 +56,8 @@ export default class PacienteRepository {
 
   Delete(paciente, onSuccess, onError) {
     var db = openDatabase({name: this.DBNAME});
-    // console.log("iniciando transaction")
     db.transaction((transaction) => {
-      // console.log("dentro da transaction")
       transaction.executeSql(this.DELETE, [paciente.id], onSuccess, onError);
     });
-
-    // console.log("finalizando delete")
   }
 }

@@ -3,8 +3,6 @@ import {Container, Header, Footer, Text, Tab, Tabs} from 'native-base';
 import axios from 'axios';
 import {api} from '../services/api';
 
-// import getTheme from '../native-base-theme/components';
-// import Custom from '../native-base-theme/variables/custom';
 import {
   Content,
   Body,
@@ -17,7 +15,6 @@ import {
   Left,
 } from 'native-base';
 
-// import store from '../redux/store';
 import {
   SafeAreaView,
   StyleSheet,
@@ -66,7 +63,6 @@ const styles = StyleSheet.create({
     backgroundColor: 'rgb(245, 105, 105)',
     borderRadius: 20,
     justifyContent: 'center',
-    // marginTop: 20
   },
 
   BotaoLogin: {
@@ -76,7 +72,6 @@ const styles = StyleSheet.create({
   },
 });
 
-// import List from '../screens/List';
 
 const TelaInicial = props => {
   const [paciente, setPaciente] = useState([]);
@@ -90,19 +85,14 @@ const TelaInicial = props => {
 
       for (let i = 0; i < results.rows.length; i++) {
         data.push(results.rows.item(i));
-        // alert(results.rows.item(i));
       }
 
-      // const data =
-      // api
-      // .get('/paciente').then(obj=>obj.data)
 
       setItem(data);
     });
   };
 
   const deletePaciente = id => {
-    // alert(id);
     api.delete(`/paciente/${id}`);
 
     const repository = new PacienteRepository();

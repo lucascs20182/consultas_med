@@ -17,14 +17,11 @@ import {
   Animated,
 } from 'react-native';
 
-// import UserRepository from '../repositories/user';
 import {api} from '../services/api';
-// import store from '../redux/store';
 
 export default function CriarConta(props) {
   const navigation = props.navigation;
 
-  // define os estados para armazenar username e senha
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [email, setEmail] = useState('');
@@ -34,7 +31,7 @@ export default function CriarConta(props) {
     Animated.timing(opacity, {
       toValue: 1,
       duration: 1000,
-      useNativeDriver: true, //faz a maldita mensagem de erro sumir
+      useNativeDriver: true, 
     }).start();
   }, []);
 
@@ -129,7 +126,6 @@ const styles = StyleSheet.create({
   },
 
   input: {
-    //flex: 1,
     backgroundColor: 'white',
     borderColor: 'grey',
     borderWidth: 1,
@@ -143,7 +139,6 @@ const styles = StyleSheet.create({
   },
 
   btnSubmit: {
-    //flex: 1,
     margin: 20,
     backgroundColor: '#117a6d',
     width: 300,
@@ -170,10 +165,7 @@ const styles = StyleSheet.create({
   },
 
   header: {
-    //flex: 1,
-    //flexDirection: 'row',
     justifyContent: 'center',
-    //marginBottom: 15,
     top: 50,
   },
 

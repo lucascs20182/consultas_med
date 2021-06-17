@@ -55,14 +55,8 @@ export default function Lista(props) {
 
     const repository = new PacienteRepository();
 
-    // //Adicionando nova pessoa
     repository.Save({nome, sobrenome, cpf, dataNascimento}, () => {
-      //Informando que o cadastro foi feito com sucesso
       alert('Salvo com Sucesso');
-
-      //Retornando a tela inicial
-      // const navigation = props.navigation;
-      // navigation.replace('TelaInicial');
     });
   };
 

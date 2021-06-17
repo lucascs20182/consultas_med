@@ -90,14 +90,21 @@ const TelaInicial = props => {
 
       for (let i = 0; i < results.rows.length; i++) {
         data.push(results.rows.item(i));
+        // alert(results.rows.item(i));
       }
 
-      // console.log(data)
+      // const data =
+      // api
+      // .get('/paciente').then(obj=>obj.data)
+
       setItem(data);
     });
   };
 
   const deletePaciente = id => {
+    // alert(id);
+    api.delete(`/paciente/${id}`);
+
     const repository = new PacienteRepository();
 
     repository.Delete(

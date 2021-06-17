@@ -53,7 +53,12 @@ export default function Login(props) {
   };
 
   const login = () => {
-    navigation.replace('TelaInicial');
+    const data = {username, senha: password};
+    api
+      .post('/login', data)
+      .then(() => navigation.replace('TelaInicial'))
+      .catch(err => alert(err));
+    // navigation.replace('TelaInicial');
   };
 
   return (

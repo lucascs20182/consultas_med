@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { useEffect } from 'react';
+import {useEffect} from 'react';
 import {SafeAreaView, StyleSheet, Image, View} from 'react-native';
 import {StyleProvider} from 'native-base';
 import getTheme from '../native-base-theme/components';
@@ -26,9 +26,9 @@ const styles = StyleSheet.create({
 
 export default function Splash(props) {
   const navigation = props.navigation;
-  
+
   const goToList = () => {
-    navigation.replace('TelaInicial');
+    navigation.replace('Login');
   };
 
   //Use Effect é executado quando o componente é montado
@@ -49,13 +49,10 @@ export default function Splash(props) {
             flex: 1,
             justifyContent: 'center',
             alignItems: 'center',
-          }}>
-          
-        </View>
+          }}></View>
       </SafeAreaView>
     </StyleProvider>
   );
 }
-
 
 //<Image style={styles.logo} source={FesoLogo} />

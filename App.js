@@ -36,7 +36,10 @@ const App = () => {
           <Stack.Screen name="FormMedico" component={FormMedico} />
           <Stack.Screen name="EditarFormMedico" component={EditarFormMedico} />
           <Stack.Screen name="FormConsulta" component={FormConsulta} />
-          <Stack.Screen name="EditarFormConsulta" component={EditarFormConsulta} />
+          <Stack.Screen
+            name="EditarFormConsulta"
+            component={EditarFormConsulta}
+          />
         </Stack.Navigator>
       </NavigationContainer>
     </Provider>

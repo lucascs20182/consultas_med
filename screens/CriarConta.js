@@ -1,5 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import * as Animatable from 'react-native-animatable';
+import axios from 'axios';
 
 import {
   StyleSheet,
@@ -16,8 +17,17 @@ import {
   Animated,
 } from 'react-native';
 
+// import UserRepository from '../repositories/user';
+import {api} from '../services/api';
+// import store from '../redux/store';
+
 export default function CriarConta(props) {
   const navigation = props.navigation;
+
+  // define os estados para armazenar username e senha
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+  const [email, setEmail] = useState('');
 
   const [opacity] = useState(new Animated.Value(0));
   useEffect(() => {
@@ -29,7 +39,15 @@ export default function CriarConta(props) {
   }, []);
 
   const goToList = () => {
-    navigation.replace('CriarConta');
+    navigation.replace('Login');
+  };
+
+  const cadastro = () => {
+    const data = {username, email, senha: password};
+    api
+      .post('/create', data)
+      .then(() => navigation.replace('TelaInicial'))
+      .catch(err => alert(err));
   };
 
   return (
@@ -64,24 +82,24 @@ export default function CriarConta(props) {
             style={styles.input}
             placeholder="Username"
             autoCorrect={false}
-            onChangeText={() => {}}
+            onChangeText={text => setUsername(text)}
           />
 
           <TextInput
             style={styles.input}
             placeholder="Email"
             autoCorrect={false}
-            onChangeText={() => {}}
+            onChangeText={text => setEmail(text)}
           />
 
           <TextInput
             style={styles.input}
             placeholder="Senha"
             autoCorrect={false}
-            onChangeText={() => {}}
+            onChangeText={text => setPassword(text)}
           />
 
-          <TouchableOpacity style={styles.btnSubmit}>
+          <TouchableOpacity style={styles.btnSubmit} onPress={cadastro}>
             <Text style={styles.submitText}>Salvar</Text>
           </TouchableOpacity>
         </View>

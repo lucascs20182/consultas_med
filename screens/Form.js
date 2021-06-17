@@ -1,6 +1,8 @@
 import * as React from 'react';
 import getTheme from '../native-base-theme/components';
 import Custom from '../native-base-theme/variables/custom';
+import axios from 'axios';
+import {api} from '../services/api';
 import {
   Container,
   Content,
@@ -13,7 +15,7 @@ import {
   Item,
   Input,
   Title,
-  Toast
+  Toast,
 } from 'native-base';
 
 import {SafeAreaView, StyleSheet, ScrollView, View} from 'react-native';
@@ -39,27 +41,28 @@ const styles = StyleSheet.create({
 });
 
 export default function Lista(props) {
- 
   const [nome, setName] = useState('');
   const [sobrenome, setSobrenome] = useState('');
   const [cpf, setCpf] = useState('');
   const [dataNascimento, setDataNascimento] = useState('');
 
-
   const savePaciente = () => {
+    const data = {nome, sobrenome, cpf, dataNascimento};
+    api
+      .post('/paciente/cadastrar', data)
+      .then(() => props.navigation.replace('TelaInicial'))
+      .catch(err => alert(err));
 
     const repository = new PacienteRepository();
-    
-    //Adicionando nova pessoa
+
+    // //Adicionando nova pessoa
     repository.Save({nome, sobrenome, cpf, dataNascimento}, () => {
       //Informando que o cadastro foi feito com sucesso
       alert('Salvo com Sucesso');
 
       //Retornando a tela inicial
-      const navigation = props.navigation;
-      navigation.replace('TelaInicial');
-    }, (e) => {
-      alert('Erro durante salvamento');
+      // const navigation = props.navigation;
+      // navigation.replace('TelaInicial');
     });
   };
 
@@ -78,28 +81,28 @@ export default function Lista(props) {
                 <Item>
                   <Input
                     value={nome}
-                    onChangeText={(text) => setName(text)}
+                    onChangeText={text => setName(text)}
                     placeholder="Nome"
                   />
                 </Item>
                 <Item>
                   <Input
                     value={sobrenome}
-                    onChangeText={(text) => setSobrenome(text)}
+                    onChangeText={text => setSobrenome(text)}
                     placeholder="Sobrenome"
                   />
                 </Item>
                 <Item>
                   <Input
                     value={cpf}
-                    onChangeText={(text) => setCpf(text)}
+                    onChangeText={text => setCpf(text)}
                     placeholder="CPF"
                   />
                 </Item>
                 <Item>
                   <Input
                     value={dataNascimento}
-                    onChangeText={(text) => setDataNascimento(text)}
+                    onChangeText={text => setDataNascimento(text)}
                     placeholder="Data de Nascimento"
                   />
                 </Item>

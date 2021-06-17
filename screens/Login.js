@@ -28,8 +28,16 @@ import {
   Left,
 } from 'native-base';
 
+// import UserRepository from '../repositories/user';
+import store from '../redux/store';
+import {api} from '../services/api';
+
 export default function Login(props) {
   const navigation = props.navigation;
+
+  // define os estados para armazenar username e senha
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
 
   const [opacity] = useState(new Animated.Value(0));
   useEffect(() => {
@@ -41,8 +49,13 @@ export default function Login(props) {
   }, []);
 
   const goToList = () => {
-    navigation.replace('Login');
+    navigation.replace('TelaInicial');
   };
+
+  const login = () => {
+    navigation.replace('TelaInicial');
+  };
+
   return (
     <KeyboardAvoidingView style={styles.background}>
       <StatusBar backgroundColor="#14207e" barStyle="light-content" />
@@ -69,17 +82,17 @@ export default function Login(props) {
           style={styles.input}
           placeholder="Username"
           autoCorrect={false}
-          onChangeText={() => {}}
+          onChangeText={text => setUsername(text)}
         />
 
         <TextInput
           style={styles.input}
           placeholder="Senha"
           autoCorrect={false}
-          onChangeText={() => {}}
+          onChangeText={text => setPassword(text)}
         />
 
-        <TouchableOpacity style={styles.btnSubmit}>
+        <TouchableOpacity style={styles.btnSubmit} onPress={login}>
           <Text style={styles.submitText}>Acessar</Text>
         </TouchableOpacity>
 

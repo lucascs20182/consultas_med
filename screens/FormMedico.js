@@ -1,6 +1,8 @@
 import * as React from 'react';
 import getTheme from '../native-base-theme/components';
 import Custom from '../native-base-theme/variables/custom';
+import axios from 'axios';
+import {api} from '../services/api';
 import {
   Container,
   Content,
@@ -13,7 +15,7 @@ import {
   Item,
   Input,
   Title,
-  Toast
+  Toast,
 } from 'native-base';
 
 import {SafeAreaView, StyleSheet, ScrollView, View} from 'react-native';
@@ -39,26 +41,24 @@ const styles = StyleSheet.create({
 });
 
 export default function Lista(props) {
- 
   const [nome, setNome] = useState('');
   const [sobrenome, setSobrenome] = useState('');
   const [crm, setCrm] = useState('');
   const [especialidade, setEspecialidade] = useState('');
 
   const saveMedico = () => {
+    const data = {nome, sobrenome, crm, especialidade};
+    api
+      .post('/medico/cadastrar', data)
+      .then(() => props.navigation.replace('TelaInicial'))
+      .catch(err => alert(err));
 
     const repository = new MedicoRepository();
-    
-    //Adicionando nova pessoa
+
+    // //Adicionando nova pessoa
     repository.Save({nome, sobrenome, crm, especialidade}, () => {
       //Informando que o cadastro foi feito com sucesso
       alert('Salvo com Sucesso');
-
-      //Retornando a tela inicial
-      const navigation = props.navigation;
-      navigation.replace('TelaInicial');
-    }, (e) => {
-      alert('Erro durante salvamento');
     });
   };
 
@@ -77,28 +77,28 @@ export default function Lista(props) {
                 <Item>
                   <Input
                     value={nome}
-                    onChangeText={(text) => setNome(text)}
+                    onChangeText={text => setNome(text)}
                     placeholder="Nome"
                   />
                 </Item>
                 <Item>
                   <Input
                     value={sobrenome}
-                    onChangeText={(text) => setSobrenome(text)}
+                    onChangeText={text => setSobrenome(text)}
                     placeholder="Sobrenome"
                   />
                 </Item>
                 <Item>
                   <Input
                     value={crm}
-                    onChangeText={(text) => setCrm(text)}
+                    onChangeText={text => setCrm(text)}
                     placeholder="CRM"
                   />
                 </Item>
                 <Item>
                   <Input
                     value={especialidade}
-                    onChangeText={(text) => setEspecialidade(text)}
+                    onChangeText={text => setEspecialidade(text)}
                     placeholder="Especialidade"
                   />
                 </Item>

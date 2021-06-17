@@ -1,5 +1,7 @@
 import React from 'react';
-import { Container, Header, Footer, Text, Tab, Tabs } from 'native-base';
+import {Container, Header, Footer, Text, Tab, Tabs} from 'native-base';
+import axios from 'axios';
+import {api} from '../services/api';
 
 // import getTheme from '../native-base-theme/components';
 // import Custom from '../native-base-theme/variables/custom';
@@ -12,41 +14,48 @@ import {
   List,
   ListItem,
   Title,
-  Left
+  Left,
 } from 'native-base';
 
 // import store from '../redux/store';
-import { SafeAreaView, StyleSheet, ScrollView, View, Image, TouchableOpacity } from 'react-native';
+import {
+  SafeAreaView,
+  StyleSheet,
+  ScrollView,
+  View,
+  Image,
+  TouchableOpacity,
+} from 'react-native';
 import PacienteRepository from '../repositories/paciente';
 import MedicoRepository from '../repositories/medico';
 import ConsultaRepository from '../repositories/consulta';
-import { useState } from 'react';
+import {useState} from 'react';
 
 const styles = StyleSheet.create({
   viewAddButton: {
     position: 'absolute',
     bottom: 25,
-    right: 20
+    right: 20,
   },
 
   viewEditRemoveButton: {
-    flexDirection: 'row'
+    flexDirection: 'row',
   },
 
   addButton: {
     height: 50,
-    width: 50
+    width: 50,
   },
 
   editPaciente: {
     width: 70,
     height: 38,
     bottom: 25,
-    tintColor: "#000",
+    tintColor: '#000',
     backgroundColor: 'rgb(232, 218, 58)',
     resizeMode: 'contain',
     borderRadius: 20,
-    justifyContent: 'center'
+    justifyContent: 'center',
   },
   delPaciente: {
     width: 70,
@@ -63,13 +72,13 @@ const styles = StyleSheet.create({
   BotaoLogin: {
     position: 'absolute',
     bottom: 25,
-    left: 20
+    left: 20,
   },
 });
 
 // import List from '../screens/List';
 
-const TelaInicial = (props) => {
+const TelaInicial = props => {
   const [paciente, setPaciente] = useState([]);
   const [medico, setMedico] = useState([]);
   const [consulta, setConsulta] = useState([]);
@@ -77,7 +86,6 @@ const TelaInicial = (props) => {
   const retrieveData = (Repository, setItem) => {
     const repository = new Repository();
     repository.Retrieve((tx, results) => {
-
       let data = [];
 
       for (let i = 0; i < results.rows.length; i++) {
@@ -89,51 +97,60 @@ const TelaInicial = (props) => {
     });
   };
 
-  const deletePaciente = (id) => {
+  const deletePaciente = id => {
     const repository = new PacienteRepository();
-    
-      repository.Delete({id}, function() {
 
-      retrieveData(PacienteRepository, setPaciente);
-    }, function(erro) {
-      alert('Erro durante a remoção');
-      console.log(erro)
-    });
+    repository.Delete(
+      {id},
+      function () {
+        retrieveData(PacienteRepository, setPaciente);
+      },
+      function (erro) {
+        alert('Erro durante a remoção');
+        console.log(erro);
+      },
+    );
   };
 
-  const deleteMedico = (id) => {
+  const deleteMedico = id => {
     const repository = new MedicoRepository();
-    
-      repository.Delete({id}, function() {
 
-      retrieveData(MedicoRepository, setMedico);
-    }, function(erro) {
-      alert('Erro durante a remoção');
-      console.log(erro)
-    });
+    repository.Delete(
+      {id},
+      function () {
+        retrieveData(MedicoRepository, setMedico);
+      },
+      function (erro) {
+        alert('Erro durante a remoção');
+        console.log(erro);
+      },
+    );
   };
 
-  const deleteConsulta = (id) => {
+  const deleteConsulta = id => {
     const repository = new ConsultaRepository();
-    
-      repository.Delete({id}, function() {
 
-      retrieveData(ConsultaRepository, setConsulta);
-    }, function(erro) {
-      alert('Erro durante a remoção');
-      console.log(erro)
-    });
+    repository.Delete(
+      {id},
+      function () {
+        retrieveData(ConsultaRepository, setConsulta);
+      },
+      function (erro) {
+        alert('Erro durante a remoção');
+        console.log(erro);
+      },
+    );
   };
 
-  const editaPaciente = (paciente) => {
+  const editaPaciente = paciente => {
     props.navigation.navigate('EditarForm', paciente);
   };
 
-  const editaMedico = (medico) => {
+  const editaMedico = medico => {
     props.navigation.navigate('EditarFormMedico', medico);
   };
 
-  const editaConsulta = (consulta) => {
+  const editaConsulta = consulta => {
     props.navigation.navigate('EditarFormConsulta', consulta);
   };
 
@@ -161,15 +178,27 @@ const TelaInicial = (props) => {
                   </Body>
 
                   <View style={styles.viewEditRemoveButton}>
-                    <Button style={styles.editPaciente} onPress={() => editaPaciente(value)}>
+                    <Button
+                      style={styles.editPaciente}
+                      onPress={() => editaPaciente(value)}>
                       <TouchableOpacity>
-                        <Text style={{ width: "100%", color: '#000', fontSize: 12 }}>Editar</Text>
+                        <Text
+                          style={{width: '100%', color: '#000', fontSize: 12}}
+                          onPress={() => editaPaciente(value)}>
+                          Editar
+                        </Text>
                       </TouchableOpacity>
                     </Button>
 
-                    <Button style={styles.delPaciente} onPress={() => deletePaciente(value.id)}>
+                    <Button
+                      style={styles.delPaciente}
+                      onPress={() => deletePaciente(value.id)}>
                       <TouchableOpacity>
-                        <Text style={{ width: "100%", color: 'white', fontSize: 12 }}>Excluir</Text>
+                        <Text
+                          style={{width: '100%', color: 'white', fontSize: 12}}
+                          onPress={() => deletePaciente(value.id)}>
+                          Excluir
+                        </Text>
                       </TouchableOpacity>
                     </Button>
                   </View>
@@ -178,41 +207,29 @@ const TelaInicial = (props) => {
             </List>
           </ScrollView>
 
-          <View
-            style={styles.viewAddButton}>
+          <View style={styles.viewAddButton}>
             <Button
               rounded
               dark
               style={styles.addButton}
               onPress={() => {
                 props.navigation.navigate('Form');
-
               }}>
               <Icon type="FontAwesome" name="plus" />
             </Button>
           </View>
 
-                
-
-          <View
-              style={styles.BotaoLogin}>
-              <Button
-                rounded
-                dark
-                style={styles.addButton}
-                onPress={() => {
-                  props.navigation.navigate('Login');
-                }}>
-                <Icon type="FontAwesome" name="minus" />
-              </Button>
+          <View style={styles.BotaoLogin}>
+            <Button
+              rounded
+              dark
+              style={styles.addButton}
+              onPress={() => {
+                props.navigation.navigate('Login');
+              }}>
+              <Icon type="FontAwesome" name="minus" />
+            </Button>
           </View>
-
-
-
-
-
-
-
         </Tab>
         <Tab heading="Médicos/Funcionários">
           <List>
@@ -227,15 +244,25 @@ const TelaInicial = (props) => {
                 </Body>
 
                 <View style={styles.viewEditRemoveButton}>
-                  <Button style={styles.editPaciente} onPress={() => editaMedico(value)}>
+                  <Button
+                    style={styles.editPaciente}
+                    onPress={() => editaMedico(value)}>
                     <TouchableOpacity>
-                      <Text style={{ width: "100%", color: '#000', fontSize: 12 }}>Editar</Text>
+                      <Text
+                        style={{width: '100%', color: '#000', fontSize: 12}}>
+                        Editar
+                      </Text>
                     </TouchableOpacity>
                   </Button>
 
-                  <Button style={styles.delPaciente} onPress={() => deleteMedico(value.id)}>
+                  <Button
+                    style={styles.delPaciente}
+                    onPress={() => deleteMedico(value.id)}>
                     <TouchableOpacity>
-                      <Text style={{ width: "100%", color: 'white', fontSize: 12 }}>Excluir</Text>
+                      <Text
+                        style={{width: '100%', color: 'white', fontSize: 12}}>
+                        Excluir
+                      </Text>
                     </TouchableOpacity>
                   </Button>
                 </View>
@@ -243,15 +270,13 @@ const TelaInicial = (props) => {
             ))}
           </List>
 
-          <View
-            style={styles.viewAddButton}>
+          <View style={styles.viewAddButton}>
             <Button
               rounded
               dark
               style={styles.addButton}
               onPress={() => {
                 props.navigation.navigate('FormMedico');
-
               }}>
               <Icon type="FontAwesome" name="plus" />
             </Button>
@@ -262,35 +287,41 @@ const TelaInicial = (props) => {
             {consulta.map((value, index) => (
               <ListItem key={index}>
                 <Body>
-                {
-                    paciente.map((v, i) => {
-                      if(v.id == value.idPaciente) {
-                        return <Text>{`Paciente: ${v.nome}`}</Text>
-                      }
-                    })
-                  }
+                  {paciente.map((v, i) => {
+                    if (v.id == value.idPaciente) {
+                      return <Text>{`Paciente: ${v.nome}`}</Text>;
+                    }
+                  })}
 
-                  {
-                    medico.map((v, i) => {
-                      if(v.id == value.idMedico) {
-                        return <Text>{`Médico: ${v.nome}`}</Text>
-                      }
-                    })
-                  }
+                  {medico.map((v, i) => {
+                    if (v.id == value.idMedico) {
+                      return <Text>{`Médico: ${v.nome}`}</Text>;
+                    }
+                  })}
 
                   <Text>{`Data da consulta: ${value.dataConsulta}`}</Text>
                 </Body>
 
                 <View style={styles.viewEditRemoveButton}>
-                  <Button style={styles.editPaciente} onPress={() => editaConsulta(value)}>
+                  <Button
+                    style={styles.editPaciente}
+                    onPress={() => editaConsulta(value)}>
                     <TouchableOpacity>
-                      <Text style={{ width: "100%", color: '#000', fontSize: 12 }}>Editar</Text>
+                      <Text
+                        style={{width: '100%', color: '#000', fontSize: 12}}>
+                        Editar
+                      </Text>
                     </TouchableOpacity>
                   </Button>
 
-                  <Button style={styles.delPaciente} onPress={() => deleteConsulta(value.id)}>
+                  <Button
+                    style={styles.delPaciente}
+                    onPress={() => deleteConsulta(value.id)}>
                     <TouchableOpacity>
-                      <Text style={{ width: "100%", color: 'white', fontSize: 12 }}>Excluir</Text>
+                      <Text
+                        style={{width: '100%', color: 'white', fontSize: 12}}>
+                        Excluir
+                      </Text>
                     </TouchableOpacity>
                   </Button>
                 </View>
@@ -298,15 +329,13 @@ const TelaInicial = (props) => {
             ))}
           </List>
 
-          <View
-            style={styles.viewAddButton}>
+          <View style={styles.viewAddButton}>
             <Button
               rounded
               dark
               style={styles.addButton}
               onPress={() => {
                 props.navigation.navigate('FormConsulta');
-
               }}>
               <Icon type="FontAwesome" name="plus" />
             </Button>
@@ -316,6 +345,6 @@ const TelaInicial = (props) => {
       <Footer />
     </Container>
   );
-}
+};
 
 export default TelaInicial;
